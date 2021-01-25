@@ -32,7 +32,7 @@ void setup()
   pinMode(red_led_pin, OUTPUT);                          // Red LED pin mode - output
   pinMode(green_led_pin, OUTPUT);                        // Green LED pin mode - output
   pinMode(button_pin, INPUT_PULLUP);                     // Button pin mode - input
-  pinMode(back_light,OUTPUT);
+  pinMode(back_light,INPUT_PULLUP);
   
   lcd.begin(16, 2);                                      // LCD cursor position
   lcd.print("TEMP CISN   WILG");                           
@@ -90,6 +90,10 @@ void loop()
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
 
+      if(photoresistor_value > 800)                                 // Max bright value = 800
+      photoresistor_value = 800;
+      else if(photoresistor_value < 150)                            // Min bright value = 150
+      photoresistor_value = 150;
       pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
@@ -139,6 +143,10 @@ void loop()
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
 
+      if(photoresistor_value > 800)                                 // Max bright value = 800
+      photoresistor_value = 800;
+      else if(photoresistor_value < 150)                            // Min bright value = 150
+      photoresistor_value = 150;
       pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
 
