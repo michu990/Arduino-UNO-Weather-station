@@ -91,7 +91,7 @@ void loop()
       user_altitude = altitude;
 
       //pwm_led=LDR_out/4;
-      pwm_back_light=255-(photoresistor_value/2);                   // Equation for good LCD dim
+      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
       Serial.print("  -  ");
