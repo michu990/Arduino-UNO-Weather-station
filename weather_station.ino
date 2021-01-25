@@ -18,6 +18,8 @@ int button_state = 0;                                    // Variable button_stat
 int push = 0;                                            // Variable push
 int button = 0;                                          // Variable button
 bool C_or_F = true;                                      // Variable C_or_F
+int back_light = 10;                                     // Pin connected to kathode of LCD
+int pwm_back_light;                                      // Variable for pwm back light   
 
 DHT DHThumidity = DHT(dht_pin ,dht_type);                // Creates object DHThumidity
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);                   // LCD conneted pins
@@ -30,6 +32,7 @@ void setup()
   pinMode(red_led_pin, OUTPUT);                          // Red LED pin mode - output
   pinMode(green_led_pin, OUTPUT);                        // Green LED pin mode - output
   pinMode(button_pin, INPUT_PULLUP);                     // Button pin mode - input
+  pinMode(back_light,OUTPUT);
   
   lcd.begin(16, 2);                                      // LCD cursor position
   lcd.print("TEMP CISN   WILG");                           
@@ -50,6 +53,7 @@ void loop()
   double pressure;                                       // Variable called absolute pressure
   double pressure0;                                      // Variable called sea-level compensated pressure
   double user_altitude;                                  // Variable called altitude
+  int photoresistor_value = analogRead(A2);              // Photoresistor value stores in variable
 
   if (isnan(humidity))                                   // Checks DHT11 reading
     {                                                    // If work correctly displays text else program go on
@@ -64,7 +68,6 @@ void loop()
   Serial.print("  -  ");
   Serial.print("Stan przycisku:  ");
   Serial.print(button_state);               // Shows button state (0 or 1)
-
   
   button = button_state;           // Button state stores in variable
   if(push==0 && button==1) 
@@ -86,26 +89,33 @@ void loop()
       stat = BMP180pressure.getPressure(pressure,t);                // Reads pressure from BMP180 sensor
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
+
+      //pwm_led=LDR_out/4;
+      pwm_back_light=255-(photoresistor_value/2);                   // Equation for good LCd dim
+      analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
       Serial.print("  -  ");
       Serial.print("Temperatura: ");
-      Serial.print(tempC);                            // Shows temperature in C
+      Serial.print(tempC);                                    // Shows temperature in C
       Serial.print("°C");
       Serial.print("  -  ");
       Serial.print("Cisnienie: ");
-      Serial.print(pressure);                        // Shows pressure in hPa
+      Serial.print(pressure);                                 // Shows pressure in hPa
       Serial.print("hPa");
       Serial.print("  -  ");
       Serial.print("Podana wysokosc: ");
-      Serial.print(user_altitude,0);                      // Shows altitude in meters
+      Serial.print(user_altitude,0);                          // Shows altitude in meters
       Serial.print(" metry");
       Serial.print("  -  ");
-      Serial.print(user_altitude*3.28084,0);               // Shows altitude in feets
+      Serial.print(user_altitude*3.28084,0);                  // Shows altitude in feets
       Serial.print(" stopy");
       Serial.print("  -  ");
       Serial.print("Wilgotnosc: ");
-      Serial.print(humidity);                         // Shows humidity in %
+      Serial.print(humidity);                                 // Shows humidity in %
       Serial.print("%");
+      Serial.print("  -  ");
+      Serial.print("Wartosc natezenia swiatla: ");
+      Serial.print(photoresistor_value);
       
   
       lcd.setCursor(0,2);                             // LCD cursor position
@@ -133,23 +143,26 @@ void loop()
 
       Serial.print("  -  ");
       Serial.print("Temperatura: ");
-      Serial.print(tempF);                            // Shows temperature in F
+      Serial.print(tempF);                                    // Shows temperature in F
       Serial.print("°F");
       Serial.print("  -  ");
       Serial.print("Cisnienie: ");
-      Serial.print(pressure);                        // Shows pressure in hPa
+      Serial.print(pressure);                                 // Shows pressure in hPa
       Serial.print("hPa");
       Serial.print("  -  ");
       Serial.print("Podana wysokosc: ");
-      Serial.print(user_altitude,0);                      // Shows altitude in meters
+      Serial.print(user_altitude,0);                          // Shows altitude in meters
       Serial.print(" metry");
       Serial.print("  -  ");
-      Serial.print(user_altitude*3.28084,0);               // Shows altitude in feets
+      Serial.print(user_altitude*3.28084,0);                  // Shows altitude in feets
       Serial.print(" stopy");
       Serial.print("  -  ");
       Serial.print("Wilgotnosc: ");
-      Serial.print(humidity);                         // Shows humidity in %
+      Serial.print(humidity);                                 // Shows humidity in %
       Serial.print("%");
+      Serial.print("  -  ");
+      Serial.print("Wartosc natezenia swiatla: ");
+      Serial.print(photoresistor_value);
       
   
       lcd.setCursor(0,2);                             // LCD cursor position
