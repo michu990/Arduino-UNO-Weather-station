@@ -8,7 +8,7 @@
 
 #define dht_pin A0                                       // Pin connected to DHT11 sensor
 #define dht_type DHT11                                   // Define DHT sensor type 
-#define altitude 17                                      // Altitude inserted from user
+#define altitude 17                                      // Altitude inserted by user
 
 const int DS18B20_pin = A1;                              // Pin connected to DS18B20 sensor
 const int button_pin = 9;                                // Pin connected to button
