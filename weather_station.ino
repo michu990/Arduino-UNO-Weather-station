@@ -48,7 +48,7 @@ void loop()
   float tempC;                                           // Variable called temperature in C
   float tempF;                                           // Variable called temperaute in F
   float humidity = DHThumidity.readHumidity(dht_pin);    // Variable called humidity
-  char stat;                                             
+  char stat;                                             // Variable called stats
   double t;                                              // Variable called temperature
   double pressure;                                       // Variable called absolute pressure
   double pressure0;                                      // Variable called sea-level compensated pressure
@@ -91,7 +91,7 @@ void loop()
       user_altitude = altitude;
 
       //pwm_led=LDR_out/4;
-      pwm_back_light=255-(photoresistor_value/2);                   // Equation for good LCd dim
+      pwm_back_light=255-(photoresistor_value/2);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
       Serial.print("  -  ");
@@ -115,8 +115,7 @@ void loop()
       Serial.print("%");
       Serial.print("  -  ");
       Serial.print("Wartosc natezenia swiatla: ");
-      Serial.print(photoresistor_value);
-      
+      Serial.print(photoresistor_value);                      // Shows light value
   
       lcd.setCursor(0,2);                             // LCD cursor position
       lcd.print(round(tempC));                        // Shows temperature in C
@@ -162,7 +161,7 @@ void loop()
       Serial.print("%");
       Serial.print("  -  ");
       Serial.print("Wartosc natezenia swiatla: ");
-      Serial.print(photoresistor_value);
+      Serial.print(photoresistor_value);                      // Shows light value
       
   
       lcd.setCursor(0,2);                             // LCD cursor position
