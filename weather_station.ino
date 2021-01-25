@@ -90,7 +90,6 @@ void loop()
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
 
-      //pwm_led=LDR_out/4;
       pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
@@ -139,6 +138,9 @@ void loop()
       stat = BMP180pressure.getPressure(pressure,t);                // Reads pressure from BMP180 sensor
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
+
+      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
+      analogWrite(back_light,pwm_back_light);                       // Diming LCD
 
       Serial.print("  -  ");
       Serial.print("Temperatura: ");
