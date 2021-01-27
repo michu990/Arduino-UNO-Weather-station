@@ -2,12 +2,12 @@
 #include <DallasTemperature.h>                           // Library used for DS18B20 sensor          
 #include <LiquidCrystal.h>                               // Libraby used for LCD
 #include <Adafruit_Sensor.h>                             // Library used for DS18B20 sensor
-#include <DHT.h>                                         // Library used for DHT11 sensor
+#include <DHT.h>                                         // Library used for DHT22 sensor
 #include <Wire.h>                                        // Standard Arduino library used for BMP180 sensor
 #include <SFE_BMP180.h>                                  // Library used for BMP180 sensor
 
-#define dht_pin A0                                       // Pin connected to DHT11 sensor
-#define dht_type DHT11                                   // Define DHT sensor type 
+#define dht_pin A0                                       // Pin connected to DHT22 sensor
+#define dht_type DHT22                                   // Define DHT sensor type 
 #define altitude 17                                      // Altitude inserted by user
 
 const int DS18B20_pin = A1;                              // Pin connected to DS18B20 sensor
@@ -39,7 +39,7 @@ void setup()
 
   Serial.begin(9600);
   DS18B20temperature.begin();                            // Starts DS18B20 sensor
-  DHThumidity.begin();                                   // Starts DHT11 sensor
+  DHThumidity.begin();                                   // Starts DHT22 sensor
   BMP180pressure.begin();                                // Starts BMP180 sensor
 }
 
@@ -55,7 +55,7 @@ void loop()
   double user_altitude;                                  // Variable called altitude
   int photoresistor_value = analogRead(A2);              // Photoresistor value stores in variable
 
-  if (isnan(humidity))                                   // Checks DHT11 reading
+  if (isnan(humidity))                                   // Checks DHT22 reading
     {                                                    // If work correctly displays text else program go on
       lcd.setCursor(0,2);                                // LCD cursor position
       Serial.println(F("Brak odczytu z DHT!"));
