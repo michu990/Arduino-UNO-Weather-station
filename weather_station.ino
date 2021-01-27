@@ -18,7 +18,7 @@ int push = 0;                                            // Variable called push
 int button = 0;                                          // Variable called button
 bool C_or_F = true;                                      // Variable C_or_F
 int back_light_pin = 10;                                 // Pin connected to kathode of LCD
-int pwm_back_light;                                      // Variable called pwm_back_light   
+int pwm_back_light;                                      // Variable called pwm_back_light
 
 DHT dht = DHT(dht_pin ,dht_type);                        // Creates object dht
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);                   // LCD conneted pins
@@ -37,9 +37,9 @@ void setup()
   lcd.print("TEMP CISN   WILG");
 
   Serial.begin(9600);                            // Serial
-  DS18B20.begin();                               // Starts DS18B20 sensor
+  DS18B20.begin();           // Starts DS18B20 sensor
   dht.begin();                                   // Starts DHT22 sensor
-  bool good_bmp180 = BMP180.begin();                                // Starts BMP180 sensor
+  bool good_bmp180 = BMP180.begin();             // Starts BMP180 sensor
  
 }
 
