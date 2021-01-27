@@ -39,7 +39,8 @@ void setup()
   Serial.begin(9600);                            // Serial
   DS18B20.begin();                               // Starts DS18B20 sensor
   dht.begin();                                   // Starts DHT22 sensor
-  BMP180.begin();                                // Starts BMP180 sensor
+  bool good_bmp180 = BMP180.begin();                                // Starts BMP180 sensor
+ 
 }
 
 void loop()
@@ -57,11 +58,11 @@ void loop()
   if (isnan(humidity))                                   // Checks DHT22 reading
     {                                                    // If works uncorrectly displays text
       lcd.setCursor(0,2);                                // LCD cursor position
-      Serial.println(F("Brak odczytu z DHT!"));
+      Serial.println("Brak odczytu z DHT!");
       lcd.print("BrakodczytuzDHT!");
       return;
     }
-    
+
   button_state = digitalRead(button_pin);     // Reads button state and stores it in variable
   Serial.println(" ");
   Serial.print("  -  ");
@@ -89,11 +90,21 @@ void loop()
       stat = BMP180.startPressure(3);                       // Starts to collect pressure data form BMP180 sensor
       stat = BMP180.getPressure(pressure,tempC);            // Reads pressure from BMP180 sensor
       pressure0 = BMP180.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
+
+      if (stat != 0)                                        // Checks DHT22 reading
+          delay (10);                                           // Slight delay  
+      else                                                  // If works uncorrectly displays text
+        {
+          lcd.setCursor(0,2);                                 // LCD cursor position
+          Serial.println("Brak odczytu z BMP180!");
+          lcd.print("BrakodczytuzBMP180!");
+          return;
+        }
       
       if(photoresistor_value > 800)                                 // Max bright value = 1000
-      photoresistor_value = 1000;
+        photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
-      photoresistor_value = 150;
+        photoresistor_value = 150;
       pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
       analogWrite(back_light_pin,pwm_back_light);                   // Diming LCD
       
@@ -144,9 +155,9 @@ void loop()
       pressure0 = BMP180.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
 
       if(photoresistor_value > 800)                                 // Max bright value = 1000
-      photoresistor_value = 1000;
+        photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
-      photoresistor_value = 150;
+        photoresistor_value = 150;
       pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
       analogWrite(back_light_pin,pwm_back_light);                   // Diming LCD
 
