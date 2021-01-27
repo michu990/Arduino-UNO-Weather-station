@@ -90,11 +90,11 @@ void loop()
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
 
-      if(photoresistor_value > 800)                                 // Max bright value = 800
-      photoresistor_value = 800;
+      if(photoresistor_value > 800)                                 // Max bright value = 1000
+      photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
       photoresistor_value = 150;
-      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
+      pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
       
       Serial.print("  -  ");
@@ -143,11 +143,11 @@ void loop()
       pressure0 = BMP180pressure.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
       user_altitude = altitude;
 
-      if(photoresistor_value > 800)                                 // Max bright value = 800
-      photoresistor_value = 800;
+      if(photoresistor_value > 800)                                 // Max bright value = 1000
+      photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
       photoresistor_value = 150;
-      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
+      pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
       analogWrite(back_light,pwm_back_light);                       // Diming LCD
 
       Serial.print("  -  ");
