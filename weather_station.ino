@@ -28,6 +28,8 @@ SFE_BMP180 BMP180;                                       // Creates object BMP18
 
 void setup()
 {
+  Serial.begin(9600);                            // Serial
+  
   pinMode(red_led_pin, OUTPUT);                          // Red LED pin mode - output
   pinMode(green_led_pin, OUTPUT);                        // Green LED pin mode - output
   pinMode(button_pin, INPUT_PULLUP);                     // Button pin mode - input_pullup
@@ -36,8 +38,7 @@ void setup()
   lcd.begin(16, 2);                                      // LCD cursor position
   lcd.print("TEMP CISN   WILG");
 
-  Serial.begin(9600);                            // Serial
-  DS18B20.begin();           // Starts DS18B20 sensor
+  DS18B20.begin();                               // Starts DS18B20 sensor
   dht.begin();                                   // Starts DHT22 sensor
   bool good_bmp180 = BMP180.begin();             // Starts BMP180 sensor
  
@@ -105,7 +106,7 @@ void loop()
         photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
         photoresistor_value = 150;
-      pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
+      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light_pin,pwm_back_light);                   // Diming LCD
       
       Serial.print("  -  ");
@@ -151,14 +152,14 @@ void loop()
       stat = BMP180.startTemperature();                     // Starts to collect temperature data from BMP180 sensor
       stat = BMP180.getTemperature(t);                      // Reads temperature from BMP180 sensor
       stat = BMP180.startPressure(3);                       // Starts to collect pressure data form BMP180 sensor
-      stat = BMP180.getPressure(pressure, user_altitude);   // Reads pressure from BMP180 sensor
+      stat = BMP180.getPressure(pressure, tempC);           // Reads pressure from BMP180 sensor
       pressure0 = BMP180.sealevel(pressure, altitude);      // Reads pressure to sealevel from BMP180 sensor
 
       if(photoresistor_value > 800)                                 // Max bright value = 1000
         photoresistor_value = 1000;
       else if(photoresistor_value < 150)                            // Min bright value = 150
         photoresistor_value = 150;
-      pwm_back_light=255+(photoresistor_value/2);                   // Equation for good LCD dim
+      pwm_back_light=255+(photoresistor_value/4);                   // Equation for good LCD dim
       analogWrite(back_light_pin,pwm_back_light);                   // Diming LCD
 
       Serial.print("  -  ");
